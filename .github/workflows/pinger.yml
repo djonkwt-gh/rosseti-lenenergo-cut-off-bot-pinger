@@ -1,0 +1,21 @@
+name: Keep App Alive
+
+on:
+  schedule:
+    # - cron: '*/5 8-22 * * *'    # Каждые 5 минут днем
+    # - cron: '30 0-7,23 * * *'   # Раз в час ночью
+    - cron: '*/10 * * * *'     # Раз в 10 минут
+    # - cron: '0 6 * * *'  # 6:00 каждый день
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 1) Ping - разбудить
+        run: |
+          curl -s -m 90 \
+            -o /dev/null \
+            https://lenenergo-cut-off-bot.onrender.com/ping
+          echo "✅ Ping sent"
